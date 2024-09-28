@@ -252,17 +252,11 @@
     }
   
     /* ปุ่มดาวน์โหลด และปี/เดือน */
-    .month {
-      position: relative ;
-      font-size: 5vw;
-      top: 3vh;
-      margin-left: -40vw ;
-    }
-    .year {
-      position: relative ;
-      font-size: 5vw;
-      top: 0.2vh;
-      margin-left: 40vw ;
+    .month, .year {
+      position: relative;
+      display: inline-block;
+      top: 0.5vh;
+      left: -2vw;
     }
   
     .month select, .year select {
