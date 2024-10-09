@@ -52,7 +52,7 @@ function EarthquakeAI() {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `earthquake-history-${month}-${year}.csv`;
+        link.download = `earthquake-history-${selectedMonth}-${selectedYear}.csv`;
         link.click();
       } else {
         console.error('Error downloading file');
