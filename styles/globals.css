@@ -150,6 +150,18 @@
     top: 0;
     left: 0;
   }
+  .warning-message {
+    color: red;
+    font-size: 0.8vw;
+    display: flex;
+    position : relative ;
+    flex-direction: column;
+    align-items: flex-start;
+    top: 22vh ;
+    left : -10vh ;
+    
+  }
+  
   }
   
   
@@ -244,7 +256,7 @@
       font-size: 5vw;
       padding: 2vh 5vw;
       border-radius: 2vh;
-      margin-top: -2vh;
+      margin-top: 0.7vh;
     }
   
     button:hover {
@@ -258,6 +270,7 @@
       top: 0.5vh;
       left: -2vw;
     }
+    
   
     .month select, .year select {
       font-size: 4.5vw;
@@ -295,5 +308,12 @@
       top: 0;
       left: 0;
     }
+    .warning-message {
+      position : relative ;
+      color: red;
+      font-size: 3vw;
+      top: -11.5vh ; /* ปรับระยะห่างระหว่างข้อความเตือนกับฟอร์ม */
+      left: 0vw;
+    }
   }
-  
+ 

@@ -6,16 +6,25 @@ function EarthquakeAI() {
   const [magnitude, setMagnitude] = useState('');
   const [depth, setDepth] = useState('');
   const [reaction, setReaction] = useState('');
-  const [Intensity, setIntensity] = useState('');
-  const [Destruction, setDestruction] = useState('');
-  const [Intensity_description, setIntensity_description] = useState('');
-  const [Destruction_description, setDestruction_description] = useState('');
-  const [selectedMonth, setSelectedMonth] = useState(''); // เริ่มต้นเป็นเดือนกันยายน
-  const [selectedYear, setSelectedYear] = useState(''); // เริ่มต้นเป็นปี 2024
+  const [intensity, setIntensity] = useState('');
+  const [destruction, setDestruction] = useState('');
+  const [intensityDescription, setIntensityDescription] = useState('');
+  const [destructionDescription, setDestructionDescription] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState(''); 
+  const [selectedYear, setSelectedYear] = useState(''); 
+  const [warningMessage, setWarningMessage] = useState(''); // สถานะสำหรับเก็บข้อความเตือน
   
   // ฟังก์ชันเรียก API สำหรับการคำนวณ
   const calculateEarthquake = async (e) => {
     e.preventDefault();
+
+    // ตรวจสอบค่าติดลบ
+    if (magnitude < 0 || depth < 0) {
+      setWarningMessage('Magnitude , Depth and Reaction must be positive values.');
+      return;
+    } else {
+      setWarningMessage(''); // ล้างข้อความเตือนเมื่อค่าถูกต้อง
+    }
 
     try {
       // เรียกใช้งาน API ด้วย axios
@@ -29,8 +38,8 @@ function EarthquakeAI() {
       console.log(data);
       setIntensity(data.Intensity);
       setDestruction(data.Destruction);
-      setIntensity_description(data.Intensity_description);
-      setDestruction_description(data.Destruction_description);
+      setIntensityDescription(data.Intensity_description);
+      setDestructionDescription(data.Destruction_description);
 
     } catch (error) {
       console.error('Error:', error);
@@ -43,7 +52,7 @@ function EarthquakeAI() {
       const year = new Date().getFullYear();
       const month = new Date().getMonth() + 1;
 
-      const response = await axios.get(`https://earthquackai.zapto.org/download?year=${selectedYear}&month=${selectedMonth}`, {
+      const response = await axios.get(`https://earthquackai.zapto.org//download?year=${selectedYear}&month=${selectedMonth}`, {
         responseType: 'blob',
       });
 
@@ -52,7 +61,7 @@ function EarthquakeAI() {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `earthquake-history-${selectedMonth}-${selectedYear}.csv`;
+        link.download = `earthquake-history-${month}-${year}.csv`;
         link.click();
       } else {
         console.error('Error downloading file');
@@ -93,14 +102,15 @@ function EarthquakeAI() {
           />
         </div>
         <button type="submit">submit</button>
+        {warningMessage && <p className="warning-message">** {warningMessage}**</p>}
       </form>
 
       <div className="result">
         <label htmlFor="intensity">Intensity(MMI):</label>
-        <textarea oninput="autoResize(this)" type="text" id="Intensity" value={`  ${Intensity} ${Intensity_description}`} readOnly />
+        <textarea onInput="autoResize(this)" type="text" id="intensity" value={`  ${intensity} ${intensityDescription}`} readOnly />
 
         <label htmlFor="destruction">Destruction:</label>
-        <textarea oninput="autoResize(this)" type="text" id="destruction" value={`  ${Destruction} ${Destruction_description} `} readOnly />
+        <textarea onInput="autoResize(this)" type="text" id="destruction" value={`  ${destruction} ${destructionDescription}`} readOnly />
       </div>
       <div className="month">
         <label htmlFor="month">Month  </label>
